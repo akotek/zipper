@@ -5,21 +5,37 @@
 
 
 ;; utils
-(defn head-v [l]
-  (-> l
-      (:head)
-      (:v)))
+; ====================================
+(defn get-last [n]
+  (if (nil? (:next n))
+    n
+    (get-last (:next n))))
+
+(defn to-vec-helper [n v]
+  (if (nil? n)
+    v
+    (to-vec-helper (:next n) (conj v (:v n)))))
+
+(defn to-vec [n]
+  (to-vec-helper n []))
+
+; ====================================
 
 ;; tests
-(deftest test-create
-  (testing "creation of an empty list"
-    (let [l (create)]
-      (is (= (:head l) nil))
-      (is (= (:size l) 0)))))
+(deftest test-prepend
+  (testing "should add in start of list"
+    (let [lst (prepend (prepend (prepend nil 1) 2) 3)
+          expected [3 2 1]]
+      (is (= (to-vec lst) expected)))))
 
-(deftest test-add
-  (testing "adds value to front of list"
-    (let [l1 (add (create) 1)
-          l2 (add l1 2)]
-      (is (= (head-v l1)) 1)
-      (is (= (head-v l2) 2)))))
+(deftest test-append
+  (testing "should add to end of list"
+    (let [lst (append (append (append nil 1) 2) 3)
+          expected [1 2 3]]
+      (is (= (to-vec lst) expected)))))
+
+(deftest test-containz?
+  (testing "should return true if value exists"
+    (let [lst (append (append nil 1) 2)]
+      (is (= (containz? lst 2) true))
+      (is (= (containz? lst 3)) false))))
