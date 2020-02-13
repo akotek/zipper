@@ -6,19 +6,15 @@
 
 ;; utils
 ; ====================================
-(defn get-last [n]
-  (if (nil? (:next n))
-    n
-    (get-last (:next n))))
-
-(defn to-vec-helper [n v]
-  (if (nil? n)
-    v
-    (to-vec-helper (:next n) (conj v (:v n)))))
-
 (defn to-vec [n]
-  (to-vec-helper n []))
+  (loop [acc []
+         n n]
+    (if (nil? n)
+      acc
+      (recur (conj acc (:v n)) (:next n)))))
 
+(defn to-linked [lst]
+  (reduce (fn [n v] (append n v)) nil lst))
 ; ====================================
 
 ;; tests
@@ -36,6 +32,13 @@
 
 (deftest test-containz?
   (testing "should return true if value exists"
-    (let [lst (append (append nil 1) 2)]
+    (let [lst (to-linked [1 2])]
       (is (= (containz? lst 2) true))
       (is (= (containz? lst 3)) false))))
+
+(deftest test-get-nth
+  (testing "should return the nth element of the list"
+    (let [items [1 2 3]
+          lst (to-linked items)]
+      (doseq [[i v] (map-indexed vector items)]
+        (is (= (get-nth lst i) v))))))
