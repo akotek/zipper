@@ -7,13 +7,20 @@
 ;; Simple implementation of a singly-linked-list
 ;; most operations are linear O(n), some are constant O(1)
 
-(defrecord Node [v size next])
+(defrecord Node [v next])
 
 ;; creation
 (defn new-node
-  ([v] (Node. v 1 nil)))
+  ([v] (Node. v nil)))
 
 ;; query
+(defn length [ls]
+  (loop [ls ls
+         acc 0]
+    (if (nil? ls)
+      acc
+      (recur (:next ls) (inc acc)))))
+
 (defn containz? [ls v]
   (cond
     (nil? ls) false
@@ -31,7 +38,7 @@
 (defn prepend [e ls]
   (if (nil? ls)
     (new-node e)
-    (Node. e (inc (:size ls)) ls)))
+    (Node. e ls)))
 
 (defn append [ls e]
   (if (nil? ls)
@@ -55,8 +62,9 @@
     :else (prepend (:v ls) (remove (:next ls) v))))
 ;;end
 
-;;
-;; Disadvantages of single-linked-list:
+;; NOTES ::
+; 1. Improving 'length' to O(1) is possible with adding 'size' key to record,
+; 2. Disadvantages of single-linked-list:
 ; inability to traverse from end to start
 ; most operations are O(n)
 ; unable to improve performance giving a node (insert-after(ls, n, v), remove(ls, n)) which is able with doubly

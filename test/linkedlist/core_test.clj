@@ -17,16 +17,21 @@
 
 ;; tests
 (deftest test-prepend
-  (testing "should add e to start of list n"
+  (testing "should add e to start of list ls"
     (let [lst (prepend 3 (prepend 2 (prepend 1 nil)))
           expected [3 2 1]]
       (is (= (to-vec lst) expected)))))
 
 (deftest test-append
-  (testing "should add to end of n the element e"
+  (testing "should add to end of ls the element e"
     (let [lst (append (append (append nil 1) 2) 3)
           expected [1 2 3]]
       (is (= (to-vec lst) expected)))))
+
+(deftest test-length
+  (testing "should return length of list"
+    (is (= (length (to-linked [1])) 1))
+    (is (= (length (to-linked [1 2 3])) 3))))
 
 (deftest test-containz?
   (testing "should return true if value exists"
