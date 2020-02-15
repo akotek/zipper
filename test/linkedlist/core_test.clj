@@ -19,13 +19,13 @@
 
 ;; tests
 (deftest test-prepend
-  (testing "should add in start of list"
-    (let [lst (prepend (prepend (prepend nil 1) 2) 3)
+  (testing "should add e to start of list n"
+    (let [lst (prepend 3 (prepend 2 (prepend 1 nil)))
           expected [3 2 1]]
       (is (= (to-vec lst) expected)))))
 
 (deftest test-append
-  (testing "should add to end of list"
+  (testing "should add to end of n the element e"
     (let [lst (append (append (append nil 1) 2) 3)
           expected [1 2 3]]
       (is (= (to-vec lst) expected)))))
@@ -42,3 +42,11 @@
           lst (to-linked items)]
       (doseq [[i v] (map-indexed vector items)]
         (is (= (get-nth lst i) v))))))
+
+(deftest test-insert-after
+  (testing "should insert element e after node n"
+    (let [lst (to-linked [1 2 3])
+          expected1 (conj lst 4)
+          expected2 [1 2 4 3]]
+      (is (= (to-vec (insert-after lst 3 4)) expected1))
+      (is (= (to-vec (insert-after lst 2 4)) expected2)))))

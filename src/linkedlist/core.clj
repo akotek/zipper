@@ -10,31 +10,12 @@
 ;; creation
 (defn new-node
   ([v] (Node. v 1 nil)))
-
-;; insertion
-(defn prepend [n v]
-  (if (nil? n)
-    (new-node v)
-    (Node. v (inc (:size n)) n)))
-
-(defn append [n v]
-  (if (nil? n)
-    (new-node v)
-    (prepend
-      (append (:next n) v) (:v n))))
-
-(defn insert-before [n v])
-
-(defn insert-after [n v])
-
-;; deletion
-(defn delete [n v])
-
+seq
 ;; query
 (defn length [n]
   (if (nil? n) 0 (:size n)))
 
-(defn empty-list? [n]
+(defn empt? [n]
   (or (nil? n) (> (:size n) 0)))
 
 (defn containz? [n v]
@@ -49,6 +30,30 @@
     (if (= nth 0)
       (:v n)
       (recur (:next n) (dec nth)))))
+
+;; insertion
+(defn prepend [e n]
+  (if (nil? n)
+    (new-node e)
+    (Node. e (inc (:size n)) n)))
+
+(defn append [n e]
+  (if (nil? n)
+    (new-node e)
+    (prepend (:v n) (append (:next n) e))))
+
+(defn insert-after [new old n]
+  (cond
+    (nil? n) n
+    (= (:v (:next n)) (:v old)) (append n (prepend (:next n) new))
+    :else (prepend (:v n) (insert-after new old (:next n)))))
+
+(defn insert-after [new old ls]
+  (cond (empty? ls) ls
+        (= (first ls) old) (cons old (cons new (rest ls)))
+        :else (cons (first ls) (insert-after new old (rest ls)))))
+;; deletion
+(defn delete [n v])
 
 ;;end
 
