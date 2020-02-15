@@ -46,7 +46,9 @@
 (deftest test-insert-after
   (testing "should insert after old-v the new-v on list ls"
     (let [lst (to-linked [1 2 3])
-          expected1 [1 2 3 4]
-          expected2 [1 2 4 3]]
-      (is (= (to-vec (insert-after lst 3 4)) expected1))
-      (is (= (to-vec (insert-after lst 2 4)) expected2)))))
+          exp1 [1 4 2 3]
+          exp2 [1 2 3 4]
+          exp3 [1 2 4 3]]
+      (is (= (to-vec (insert-after 1 4 lst)) exp1))
+      (is (= (to-vec (insert-after 3 4 lst)) exp2))
+      (is (= (to-vec (insert-after 2 4 lst)) exp3)))))

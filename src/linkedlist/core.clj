@@ -17,7 +17,7 @@
   (if (nil? ls) 0 (:size ls)))
 
 (defn empt? [ls]
-  (or (nil? ls) (> (:size ls) 0)))
+  (> 0 (length ls)))
 
 (defn containz? [ls v]
   (cond
@@ -47,7 +47,7 @@
   (cond
     (nil? ls) ls
     (= (:v ls) old-v) (prepend old-v (prepend new-v (:next ls)))
-    :else (prepend (:v ls) (recur old-v new-v (:next ls)))))
+    :else (prepend (:v ls) (insert-after old-v new-v (:next ls)))))
 
 ;; deletion
 (defn remove-head [ls]
