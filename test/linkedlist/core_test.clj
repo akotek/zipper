@@ -1,8 +1,6 @@
 (ns linkedlist.core-test
   (:require [clojure.test :refer :all]
-            [linkedlist.core :refer :all])
-  (:use linkedlist.core))
-
+            [linkedlist.core :refer :all]))
 
 ;; utils
 ; ====================================
@@ -52,3 +50,14 @@
       (is (= (to-vec (insert-after 1 4 lst)) exp1))
       (is (= (to-vec (insert-after 3 4 lst)) exp2))
       (is (= (to-vec (insert-after 2 4 lst)) exp3)))))
+
+(deftest test-deletion
+  (testing "should remove head node and value after giving node"
+    (let [lst (to-linked [1 2 3])
+          exp1 [2 3]
+          exp2 [1 3]
+          exp3 [1 2]]
+      (is (= (to-vec (remove-head lst)) exp1))
+      (is (= (to-vec (remove lst 1)) exp1))
+      (is (= (to-vec (remove lst 2)) exp2))
+      (is (= (to-vec (remove lst 3))) exp3))))

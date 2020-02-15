@@ -1,10 +1,11 @@
 (ns linkedlist.core)
 
 ;TODO
-; 1. finish implementation of single-linked-list API as same as HASKELL API
-; 1.1. add runtime of implementation
-; 2. implement as a zipper
+; 2. implement zipper
 ; 3. post in stackReview your versions
+
+;; Simple implementation of a singly-linked-list
+;; most operations are linear O(n), some are constant O(1)
 
 (defrecord Node [v size next])
 
@@ -13,12 +14,6 @@
   ([v] (Node. v 1 nil)))
 
 ;; query
-(defn length [ls]
-  (if (nil? ls) 0 (:size ls)))
-
-(defn empt? [ls]
-  (> 0 (length ls)))
-
 (defn containz? [ls v]
   (cond
     (nil? ls) false
@@ -53,11 +48,17 @@
 (defn remove-head [ls]
   (:next ls))
 
-(defn remove-node [ls v])
-
+(defn remove [ls v]
+  (cond
+    (nil? ls) ls
+    (= (:v ls) v) (:next ls)
+    :else (prepend (:v ls) (remove (:next ls) v))))
 ;;end
 
-(defn -main
-  "I don't do a whole lot...yet."
-  [& args]
-  (println "Hello, World!"))
+;;
+;; Disadvantages of single-linked-list:
+; inability to traverse from end to start
+; most operations are O(n)
+; unable to improve performance giving a node (insert-after(ls, n, v), remove(ls, n)) which is able with doubly
+; doubly-linked-list becomes very difficult to implement
+;;
