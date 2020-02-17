@@ -36,8 +36,8 @@
 (deftest test-containz?
   (testing "should return true if value exists"
     (let [lst (to-linked [1 2])]
-      (is (= (containz? lst 2) true))
-      (is (= (containz? lst 3)) false))))
+      (is (= (contains?' lst 2) true))
+      (is (= (contains?' lst 3)) false))))
 
 (deftest test-get-nth
   (testing "should return the nth element of the list"
@@ -56,7 +56,7 @@
       (is (= (to-vec (insert-after 3 4 lst)) exp2))
       (is (= (to-vec (insert-after 2 4 lst)) exp3)))))
 
-(deftest test-deletion
+(deftest test-removal
   (testing "should remove head node and value after giving node"
     (let [lst (to-linked [1 2 3])
           exp1 [2 3]
@@ -66,3 +66,9 @@
       (is (= (to-vec (remove lst 1)) exp1))
       (is (= (to-vec (remove lst 2)) exp2))
       (is (= (to-vec (remove lst 3))) exp3))))
+
+(deftest test-map
+  (testing "should map on the linked list"
+    (let [lst (to-linked [1 2 3])
+          expected [2 3 4]]
+      (is (= (map' inc lst) (to-vec expected))))))

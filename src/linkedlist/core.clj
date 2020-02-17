@@ -14,6 +14,12 @@
   ([v] (Node. v nil)))
 
 ;; query
+(defn first' [ls]
+  (:v ls))
+
+(defn rest' [ls]
+  (:next ls))
+
 (defn length [ls]
   (loop [ls ls
          acc 0]
@@ -21,7 +27,7 @@
       acc
       (recur (:next ls) (inc acc)))))
 
-(defn containz? [ls v]
+(defn contains?' [ls v]
   (cond
     (nil? ls) false
     (= (:v ls) v) true
@@ -39,6 +45,9 @@
   (if (nil? ls)
     (new-node e)
     (Node. e ls)))
+
+(defn cons' [e ls]
+  (prepend e ls))
 
 (defn append [ls e]
   (if (nil? ls)
@@ -60,6 +69,12 @@
     (nil? ls) ls
     (= (:v ls) v) (:next ls)
     :else (prepend (:v ls) (remove (:next ls) v))))
+
+;; iteration
+(defn map' [f ls]
+    (if (empty? ls)
+      nil
+      (cons' (f (first' ls)) (map' f (rest' ls)))))
 ;;end
 
 ;; NOTES ::
