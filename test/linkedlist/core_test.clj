@@ -4,15 +4,15 @@
 
 ;; utils
 ; ====================================
-(defn to-vec [n]
+(defn to-vec [ls]
   (loop [acc []
-         n n]
-    (if (nil? n)
+         lst ls]
+    (if (nil? lst)
       acc
-      (recur (conj acc (:v n)) (:next n)))))
+      (recur (conj acc (first' lst)) (rest' lst)))))
 
-(defn to-linked [lst]
-  (reduce (fn [n v] (append n v)) nil lst))
+(defn to-linked [ls]
+  (reduce (fn [n v] (append n v)) nil ls))
 ; ====================================
 
 ;; tests
@@ -70,5 +70,5 @@
 (deftest test-map
   (testing "should map on the linked list"
     (let [lst (to-linked [1 2 3])
-          expected [2 3 4]]
-      (is (= (map' inc lst) (to-vec expected))))))
+          expected (to-linked [2 3 4])]
+      (is (= (map' inc lst) expected)))))

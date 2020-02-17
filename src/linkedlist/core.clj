@@ -25,20 +25,20 @@
          acc 0]
     (if (nil? ls)
       acc
-      (recur (:next ls) (inc acc)))))
+      (recur (rest' ls) (inc acc)))))
 
 (defn contains?' [ls v]
   (cond
     (nil? ls) false
-    (= (:v ls) v) true
-    :else (recur (:next ls) v)))
+    (= (first' ls) v) true
+    :else (recur (rest' ls) v)))
 
 (defn get-nth [ls nth]
   (if (nil? ls)
     nil
     (if (= nth 0)
-      (:v ls)
-      (recur (:next ls) (dec nth)))))
+      (first' ls)
+      (recur (rest' ls) (dec nth)))))
 
 ;; insertion
 (defn prepend [e ls]
@@ -52,23 +52,23 @@
 (defn append [ls e]
   (if (nil? ls)
     (new-node e)
-    (prepend (:v ls) (append (:next ls) e))))
+    (prepend (first' ls) (append (rest' ls) e))))
 
 (defn insert-after [old-v new-v ls]
   (cond
     (nil? ls) ls
-    (= (:v ls) old-v) (prepend old-v (prepend new-v (:next ls)))
-    :else (prepend (:v ls) (insert-after old-v new-v (:next ls)))))
+    (= (first' ls) old-v) (prepend old-v (prepend new-v (rest' ls)))
+    :else (prepend (first' ls) (insert-after old-v new-v (rest' ls)))))
 
 ;; deletion
 (defn remove-head [ls]
-  (:next ls))
+  (rest' ls))
 
 (defn remove [ls v]
   (cond
     (nil? ls) ls
-    (= (:v ls) v) (:next ls)
-    :else (prepend (:v ls) (remove (:next ls) v))))
+    (= (first' ls) v) (rest' ls)
+    :else (prepend (first' ls) (remove (rest' ls) v))))
 
 ;; iteration
 (defn map' [f ls]
