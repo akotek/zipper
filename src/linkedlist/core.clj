@@ -1,9 +1,5 @@
 (ns linkedlist.core)
 
-;TODO
-; 2. implement zipper
-; 3. post in stackReview your versions
-
 ;; Simple implementation of a singly-linked-list
 ;; most operations are linear O(n), some are constant O(1)
 
