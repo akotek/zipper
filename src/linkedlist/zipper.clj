@@ -13,9 +13,11 @@
      (when (< -1 idx (count data))
        [(reverse (take idx data)) (get data idx) (nthnext data (inc idx))]))))
 
-(defn right [loc])
+(defn right [[before loc after]]
+  [(cons loc before) (first after) (rest after)])
 
-(defn left [loc])
+(defn left [[before loc after]]
+  [(rest before) (first before) (cons loc after)])
 
 (defn insert-after [loc elem])
 
