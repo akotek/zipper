@@ -7,11 +7,11 @@
 (defn build
   ([data]
    (build data nil))
-  ([data focus]
-  (if (nil? focus)
-    data
-    (let [idx (.indexOf data focus)]
-      [(reverse (take idx data)) focus (nthnext data (inc idx))]))))
+  ([data idx]
+   (if (nil? idx)
+     data
+     (when (< -1 idx (count data))
+       [(reverse (take idx data)) (get data idx) (nthnext data (inc idx))]))))
 
 (defn right [loc])
 
@@ -21,5 +21,9 @@
 
 (defn insert-before [loc elem])
 
-(defn remove [loc])
+(defn remove [[before loc after]]
+  (when (and (seq? before) (some? loc) (seq? after))
+    [before (first after) (rest after)]))
 
+;;
+; Moving to neighbours in O(1) time
