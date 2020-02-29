@@ -21,9 +21,11 @@
 
 (defn insert-before [loc elem])
 
-(defn remove [[before loc after]]
-  (when (and (seq? before) (some? loc) (seq? after))
-    [before (first after) (rest after)]))
+(defn remove [z]
+  (let [[before loc after] z]
+    (if-not (and (seq? before) (some? loc) (seq? after))
+      z
+      [before (first after) (rest after)])))
 
 ;;
 ; Moving to neighbours in O(1) time

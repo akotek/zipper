@@ -12,9 +12,9 @@
       (is (= (build vec' 3) expected)))))
 
 (deftest test-remove
-  (testing "should remove focus element from the zipper and move to the right, nil if not a proper zipper"
+  (testing "should remove focus element if-exists from the zipper and move to the right"
     (let [vec' [1 2 3 4 5]
           z (build vec' 3)
           expected ['(3 2 1) 5 '()]]
-      (is (= (remove vec')) nil)
+      (is (= (remove vec')) vec')
       (is (= (remove z) expected)))))
