@@ -5,3 +5,5 @@ M
 test/linkedlist/core_test.clj,b/5/b5ae6429c5438cb70f0ac9a45d94ebd7a781ed8f
 G
 src/linkedlist/core.clj,9/6/960952a33abba72034699f1643b998c00cacfd9f
+I
+src/linkedlist/zipper.clj,9/3/931808673beca0da3688dd1f1b7a7382e4c644c5

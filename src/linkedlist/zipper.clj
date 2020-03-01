@@ -1,7 +1,9 @@
 (ns linkedlist.zipper)
 
 ;TODO
+; 1. removeEdgECases
 ; 2. implement zipper
+; 3. analyze runtime
 ; 3. post in stackReview your versions
 
 (defn build
@@ -9,9 +11,9 @@
    (build data nil))
   ([data idx]
    (if (nil? idx)
-     data
+     (build data 0)
      (when (< -1 idx (count data))
-       [(reverse (take idx data)) (get data idx) (nthnext data (inc idx))]))))
+       [(reverse (take idx data)) (get data idx) (drop (inc idx) data)]))))
 
 (defn right [[before loc after]]
   [(cons loc before) (first after) (rest after)])
@@ -23,11 +25,8 @@
 
 (defn insert-before [loc elem])
 
-(defn remove [z]
-  (let [[before loc after] z]
-    (if-not (and (seq? before) (some? loc) (seq? after))
-      z
-      [before (first after) (rest after)])))
+(defn remove [[before loc after]]
+  [before (first after) (rest after)])
 
 ;;
 ; Moving to neighbours in O(1) time
