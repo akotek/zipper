@@ -12,6 +12,18 @@
       (is (= (build vec' (count vec')) nil))
       (is (= (build vec' 3) exp2)))))
 
+(deftest test-insertion
+  (testing "should insert element before/after focus"
+    (let [z (build [1 2 3] 1)
+          exp1 ['(1) 2 '(4 3)]
+          exp2 ['(4 1) 2 '(3)]]
+      (is (= (insert-after z 4) exp1))
+      (is (= (insert-before z 4)) exp2))))
+
+(deftest test-traversal
+  (testing "should move left/right from focus"
+    ))
+
 (deftest test-remove
   (testing "should remove focus element if-exists from the zipper and move to the right"
     (let [vec' [1 2 3 4 5]

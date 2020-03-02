@@ -6,6 +6,7 @@
 ; 3. analyze runtime
 ; 3. post in stackReview your versions
 
+;; creation
 (defn build
   ([data]
    (build data nil))
@@ -15,15 +16,22 @@
      (when (< -1 idx (count data))
        [(reverse (take idx data)) (get data idx) (drop (inc idx) data)]))))
 
+(defn to-vec [[before loc after]]
+  (vec (concat (reverse before) [loc] after)))
+
+;; traversal
 (defn right [[before loc after]]
   [(cons loc before) (first after) (rest after)])
 
 (defn left [[before loc after]]
   [(rest before) (first before) (cons loc after)])
 
-(defn insert-after [loc elem])
+;; insertion/deletion
+(defn insert-after [[before loc after] elem]
+  [before loc (cons elem after)])
 
-(defn insert-before [loc elem])
+(defn insert-before [[before loc after] elem]
+  [(cons elem before) loc after])
 
 (defn remove [[before loc after]]
   [before (first after) (rest after)])
