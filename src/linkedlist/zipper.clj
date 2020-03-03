@@ -21,7 +21,7 @@
 
 ;; traversal
 (defn right [[before loc after]]
-  (when-not (empty? after)
+  (when (not-empty after)
     [(cons loc before) (first after) (rest after)]))
 
 (defn left [[before loc after]]
@@ -37,8 +37,8 @@
    (when loc
      [(cons elem before) loc after]))
 
-(defn remove [[before loc after]]
-  (when loc
+(defn remove' [[before loc after]]
+  (when (and loc (some? (first after)))
     [before (first after) (rest after)]))
 
 ;;
