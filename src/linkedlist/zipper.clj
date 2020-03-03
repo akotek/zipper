@@ -1,10 +1,10 @@
 (ns linkedlist.zipper)
 
 ;TODO
-; 1. removeEdgECases
-; 2. implement zipper
-; 3. analyze runtime
+; 1. finish implement for linkedlist use case
+; 2. analyze runtime
 ; 3. post in stackReview your versions
+; 4. implement general case for zipper
 
 ;; creation
 (defn build
@@ -21,20 +21,25 @@
 
 ;; traversal
 (defn right [[before loc after]]
-  [(cons loc before) (first after) (rest after)])
+  (when-not (empty? after)
+    [(cons loc before) (first after) (rest after)]))
 
 (defn left [[before loc after]]
-  [(rest before) (first before) (cons loc after)])
+  (when-not (empty? before)
+    [(rest before) (first before) (cons loc after)]))
 
 ;; insertion/deletion
 (defn insert-after [[before loc after] elem]
-  [before loc (cons elem after)])
+  (when loc
+    [before loc (cons elem after)]))
 
 (defn insert-before [[before loc after] elem]
-  [(cons elem before) loc after])
+   (when loc
+     [(cons elem before) loc after]))
 
 (defn remove [[before loc after]]
-  [before (first after) (rest after)])
+  (when loc
+    [before (first after) (rest after)]))
 
 ;;
 ; Moving to neighbours in O(1) time
