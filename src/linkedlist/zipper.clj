@@ -41,5 +41,19 @@
   (when (and loc (some? (first after)))
     [before (first after) (rest after)]))
 
+(defn edit [ls idx e]
+  (let [[before _ after] (build ls idx)]
+    [before e after]))
 ;;
-; Moving to neighbours in O(1) time
+; benefits:
+; 1. Moving the list in O(1) time
+; lists can be implemented in 2x ways (linked-list, dynamic array)
+; changing elements in a linked-list are usually O(n) (copying all other elements)
+; head edit is O(1), accessing rest is O(1)
+; we can edit the middle of list in O(1) if we process list in a different way,
+; holding reversed LEFT side gives us O(1) access to the head - which is the left/right element
+
+
+;; USAGES:
+; tree traversal >> http://blog.ezyang.com/2010/04/you-could-have-invented-zippers/
+; 1. xml parsing

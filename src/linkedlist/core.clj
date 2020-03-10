@@ -37,24 +37,24 @@
       (recur (rest' ls) (dec nth)))))
 
 ;; insertion
-(defn prepend [e ls]
+(defn cons' [e ls]
   (if (nil? ls)
     (new-node e)
     (Node. e ls)))
 
-(defn cons' [e ls]
-  (prepend e ls))
+(defn prepend [e ls]
+  (cons' e ls))
 
 (defn append [ls e]
   (if (nil? ls)
     (new-node e)
-    (prepend (first' ls) (append (rest' ls) e))))
+    (cons' (first' ls) (append (rest' ls) e))))
 
 (defn insert-after [old-v new-v ls]
   (cond
     (nil? ls) ls
-    (= (first' ls) old-v) (prepend old-v (prepend new-v (rest' ls)))
-    :else (prepend (first' ls) (insert-after old-v new-v (rest' ls)))))
+    (= (first' ls) old-v) (cons' old-v (cons' new-v (rest' ls)))
+    :else (cons' (first' ls) (insert-after old-v new-v (rest' ls)))))
 
 ;; deletion
 (defn remove-head [ls]
@@ -64,7 +64,7 @@
   (cond
     (nil? ls) ls
     (= (first' ls) v) (rest' ls)
-    :else (prepend (first' ls) (remove (rest' ls) v))))
+    :else (cons' (first' ls) (remove (rest' ls) v))))
 
 ;; iteration
 (defn map' [f ls]
@@ -74,6 +74,7 @@
 ;;end
 
 ;; NOTES ::
+; 0. append is O(n), cons' O(1)
 ; 1. Improving 'length' to O(1) is possible with adding 'size' key to record,
 ; 2. Disadvantages of single-linked-list:
 ; inability to traverse from end to start

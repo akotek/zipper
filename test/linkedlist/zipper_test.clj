@@ -36,3 +36,10 @@
           expected [1 3]]
       (is (= (to-vec (remove' z)) expected))
       (is (= (-> z (remove') (remove') (remove')) nil)))))
+
+(deftest test-edit-middle
+  (testing "should edit given-element in O(1)"
+    ((let [lst [1 2 3 4]
+           exp1 [1 0 3 4]
+           exp2 [1 2 0]]
+       (is (= (to-vec (edit lst 2 4))))))))
