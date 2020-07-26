@@ -21,11 +21,11 @@
 
 ;; traversal
 (defn right [[before loc after]]
-  (when (not-empty after)
+  (when (seq after)
     [(cons loc before) (first after) (rest after)]))
 
 (defn left [[before loc after]]
-  (when-not (empty? before)
+  (when (seq before)
     [(rest before) (first before) (cons loc after)]))
 
 ;; insertion/deletion
@@ -52,8 +52,3 @@
 ; head edit is O(1), accessing rest is O(1)
 ; we can edit the middle of list in O(1) if we process list in a different way,
 ; holding reversed LEFT side gives us O(1) access to the head - which is the left/right element
-
-
-;; USAGES:
-; tree traversal >> http://blog.ezyang.com/2010/04/you-could-have-invented-zippers/
-; 1. xml parsing
